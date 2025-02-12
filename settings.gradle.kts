@@ -20,7 +20,7 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "CleanWithCompose"
-include(":presentor")
+include(":app")
 include(":app:commentList")
 include(":data")
 include(":domain")
