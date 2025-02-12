@@ -1,4 +1,4 @@
-package com.example.data.di
+package com.example.commentlist.di
 
 import com.example.domain.CommentRepository
 import com.example.domain.CommentUseCase

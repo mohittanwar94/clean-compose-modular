@@ -21,3 +21,9 @@ dependencyResolutionManagement {
 
 rootProject.name = "CleanWithCompose"
 include(":app")
+include(":app:commentList")
+include(":data")
+include(":domain")
+//include(":common")
+include(":coreandroid")
+include(":corenetwork")

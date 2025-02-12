@@ -1,6 +1,6 @@
-package com.example.data.mapper
+package com.example.data.commentlist.mapper
 
-import com.example.data.CommentModelDTO
+import com.example.data.commentlist.CommentModelDTO
 import com.example.domain.CommentModel
 
 

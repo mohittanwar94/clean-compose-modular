@@ -1,4 +1,4 @@
-package com.example.data.ui
+package com.example.commentlist.ui
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -10,11 +10,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import com.example.coreandroid.theme.CleanWithComposeTheme
+import com.example.cleanwithcompose.R
+import com.example.commentlist.utils.listCommentItemCardTag
+import com.example.commentlist.utils.listCommentItemCommentTag
+import com.example.commentlist.utils.listCommentItemNameTag
+import com.example.commentlist.utils.listCommentItemPostIDTag
 import com.example.coreandroid.theme.Typography
 import com.example.domain.CommentModel
 
@@ -25,7 +29,7 @@ fun CommentItem(
 ) {
     Card(
         modifier = modifier
-            .testTag("card"),
+            .testTag(listCommentItemCardTag),
         shape = RoundedCornerShape(5.dp),
         elevation = CardDefaults.cardElevation(4.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)
@@ -37,10 +41,10 @@ fun CommentItem(
         ) {
             val (name, commentText, postId) = createRefs()
             Text(
-                text = "Name: " + comment.name,
+                text = stringResource(R.string.name) + comment.name,
                 style = Typography.titleLarge,
                 modifier = Modifier
-                    .testTag("name")
+                    .testTag(listCommentItemNameTag)
                     .padding(horizontal = 10.dp)
                     .constrainAs(name) {
                         start.linkTo(parent.start)
@@ -48,10 +52,10 @@ fun CommentItem(
                         width = Dimension.wrapContent
                     })
             Text(
-                text = "post Id: " + comment.postId,
+                text = stringResource(R.string.post_id) + comment.postId,
                 style = Typography.titleMedium,
                 modifier = Modifier
-                    .testTag("postId")
+                    .testTag(listCommentItemPostIDTag)
                     .padding(horizontal = 10.dp, vertical = 5.dp)
                     .constrainAs(postId) {
                         start.linkTo(parent.start)
@@ -62,7 +66,7 @@ fun CommentItem(
                 text = comment.comment,
                 style = Typography.titleSmall,
                 modifier = Modifier
-                    .testTag("commentText")
+                    .testTag(listCommentItemCommentTag)
                     .padding(horizontal = 10.dp, vertical = 0.dp)
                     .constrainAs(commentText) {
                         start.linkTo(parent.start)
@@ -70,20 +74,5 @@ fun CommentItem(
                         width = Dimension.wrapContent
                     })
         }
-    }
-}
-
-@Preview
-@Composable
-fun BeerItemPreview() {
-    CleanWithComposeTheme {
-        CommentItem(
-            comment = CommentModel(
-                name = "Test Comment",
-                comment = "this is a very good comment \nchecking comment quality through tasting it jhfjhfjhjj hghgjhgjhgjhgjhftyrtdgfdhgjhhkjhhjhhghfghfgdfgdghgghghfg jflksjdfkljfjsdh",
-                postId = 12232,
-            ),
-            modifier = Modifier.fillMaxWidth()
-        )
     }
 }

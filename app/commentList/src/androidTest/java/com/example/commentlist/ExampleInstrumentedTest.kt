@@ -1,4 +1,4 @@
-package com.example.data
+package com.example.commentlist
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

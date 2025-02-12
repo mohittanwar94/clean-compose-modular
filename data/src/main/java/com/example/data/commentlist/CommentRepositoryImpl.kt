@@ -1,7 +1,7 @@
-package com.example.data
+package com.example.data.commentlist
 
 import com.example.corenetwork.network.CommentApiState
-import com.example.data.mapper.mapToComment
+import com.example.data.commentlist.mapper.mapToComment
 import com.example.domain.CommentModel
 import com.example.domain.CommentRepository
 import kotlinx.coroutines.CoroutineDispatcher

@@ -1,4 +1,4 @@
-package com.example.data.di
+package com.example.corenetwork.di
 
 import dagger.Module
 import dagger.Provides

@@ -1,4 +1,4 @@
-package com.example.data.ui
+package com.example.commentlist.ui
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
@@ -13,17 +13,28 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
-import com.example.data.viewmodel.CommentUIState
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.commentlist.utils.listCommentLoaderTag
+import com.example.commentlist.utils.listCommentTag
+import com.example.commentlist.viewmodel.CommentUIState
+import com.example.commentlist.viewmodel.CommentViewModel
 
 
 @Composable
-fun CommentsScreen(comments: State<CommentUIState>) {
+fun CommentScreenRoute(viewModel: CommentViewModel = hiltViewModel(), onBackClick: () -> Unit) {
+    val commentListState by viewModel.commentUIState.collectAsStateWithLifecycle()
+    CommentsScreen(commentListState)
+}
+
+@Composable
+fun CommentsScreen(commentsList: CommentUIState) {
     val context = LocalContext.current
     Scaffold { contentPadding ->
         Box(
@@ -32,11 +43,11 @@ fun CommentsScreen(comments: State<CommentUIState>) {
                 .fillMaxHeight()
                 .padding(contentPadding)
         ) {
-            when (comments.value) {
+            when (commentsList) {
                 is CommentUIState.LOADING -> {
                     CircularProgressIndicator(
                         modifier = Modifier
-                            .testTag("centerLoader")
+                            .testTag(listCommentLoaderTag)
                             .size(30.dp)
                             .align(Alignment.Center)
                     )
@@ -44,16 +55,17 @@ fun CommentsScreen(comments: State<CommentUIState>) {
 
                 is CommentUIState.FAILURE -> {
                     Toast.makeText(
-                        context,
-                        (comments.value as CommentUIState.FAILURE).message,
+                        context, commentsList.message,
                         Toast.LENGTH_SHORT
                     ).show()
                 }
 
                 is CommentUIState.SUCCESS -> {
-                    val commentList = (comments.value as CommentUIState.SUCCESS).data
+                    val commentList = commentsList.data
                     LazyColumn(
-                        modifier = Modifier.fillMaxSize().testTag("commentList"),
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .testTag(listCommentTag),
                         verticalArrangement = Arrangement.spacedBy(5.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         contentPadding = PaddingValues(start = 10.dp, end = 10.dp)

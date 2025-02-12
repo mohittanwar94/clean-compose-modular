@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.kotlin.hilt)
     id ("kotlin-parcelize")
 }
 
@@ -43,7 +44,12 @@ android {
 
 dependencies {
     implementation(project(":coreandroid"))
+    implementation(project(":corenetwork"))
+    implementation(project(":app:commentList"))
+    implementation(project(":data"))
+    implementation(project(":domain"))
     kapt(libs.hilt.compiler)
+    api(libs.hilt.android)
     //testing dependencies
     testImplementation(libs.junit)
     testImplementation(libs.mockito.core)
@@ -58,6 +64,10 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     androidTestImplementation (libs.androidx.runner)
     androidTestImplementation (libs.androidx.rules)
+}
+
+hilt {
+    enableAggregatingTask = false
 }
 
 kapt {

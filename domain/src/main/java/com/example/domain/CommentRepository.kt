@@ -1,6 +1,6 @@
-package com.example.cleanwithcompose.domain
+package com.example.domain
 
-import com.example.cleanwithcompose.data.network.CommentApiState
+import com.example.corenetwork.network.CommentApiState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 

@@ -1,6 +1,6 @@
-package com.example.data.di
+package com.example.commentlist.di
 
-import com.example.data.CommentApi
+import com.example.data.commentlist.CommentApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,10 +14,6 @@ object CommentApiModule {
 
     @Provides
     @Singleton
-    fun provideCommentApi(
-        retrofit: Retrofit,
-    ): CommentApi {
-        return retrofit.create(CommentApi::class.java)
-    }
+    fun provideCommentApi(retrofit: Retrofit): CommentApi = retrofit.create(CommentApi::class.java)
 
 }

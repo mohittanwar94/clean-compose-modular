@@ -1,4 +1,4 @@
-package com.example.cleanwithcompose.domain
+package com.example.domain
 
 data class CommentModel(
     val postId: Int,

@@ -1,6 +1,5 @@
-package com.example.data.di
+package com.example.corenetwork.di
 
-import com.example.data.ApiInterface
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
@@ -20,10 +19,9 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideRetrofitClient(): ApiInterface =
+    fun provideRetrofitClient(): Retrofit =
         Retrofit.Builder().client(provideOkHttpClient()).baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create())).build()
-            .create(ApiInterface::class.java)
 
     @Provides
     @Singleton

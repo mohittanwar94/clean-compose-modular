@@ -1,7 +1,7 @@
-package com.example.data.di
+package com.example.commentlist.di
 
-import com.example.data.CommentApi
-import com.example.data.CommentRepositoryImpl
+import com.example.data.commentlist.CommentApi
+import com.example.data.commentlist.CommentRepositoryImpl
 import com.example.domain.CommentRepository
 import dagger.Module
 import dagger.Provides

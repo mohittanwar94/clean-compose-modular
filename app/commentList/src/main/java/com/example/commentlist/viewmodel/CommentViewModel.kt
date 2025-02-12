@@ -1,4 +1,4 @@
-package com.example.data.viewmodel
+package com.example.commentlist.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

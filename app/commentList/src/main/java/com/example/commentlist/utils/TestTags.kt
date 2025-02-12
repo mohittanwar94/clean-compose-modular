@@ -1,4 +1,8 @@
-package com.example.commentlist.Utils
+package com.example.commentlist.utils
 
-object TestTags {
-}
+const val listCommentTag="listComment"
+const val listCommentLoaderTag="listCommentLoader"
+const val listCommentItemCardTag="listCommentItemCard"
+const val listCommentItemNameTag="listCommentItemNameTag"
+const val listCommentItemPostIDTag="listCommentItemPostIDTag"
+const val listCommentItemCommentTag="listCommentItemCommentTag"
