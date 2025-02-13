@@ -2,4 +2,6 @@
     <string name="app_name">commentLists</string>
     <string name="name">"Name: "</string>
     <string name="post_id">"post Id: "</string>
+    <string name="commentlist">CommentList</string>
+    <string name="backicon">backIcon</string>
 </resources>

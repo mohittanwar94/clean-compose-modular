@@ -2,7 +2,7 @@ package com.example.commentlist.di
 
 import com.example.data.commentlist.CommentApi
 import com.example.data.commentlist.CommentRepositoryImpl
-import com.example.domain.CommentRepository
+import com.example.domain.commentlist.CommentRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

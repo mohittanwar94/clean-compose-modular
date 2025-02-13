@@ -1,25 +1,25 @@
 package com.example.data.commentlist
 
-import com.example.corenetwork.network.CommentApiState
+import com.example.corenetwork.network.ApiCallHandler.safeApiCall
+import com.example.corenetwork.network.ResultWrapper
 import com.example.data.commentlist.mapper.mapToComment
-import com.example.domain.CommentModel
-import com.example.domain.CommentRepository
+import com.example.domain.commentlist.CommentModel
+import com.example.domain.commentlist.CommentRepository
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class CommentRepositoryImpl @Inject constructor(
     private val commentApi: CommentApi,
 ) : CommentRepository {
-    override suspend fun getComments(dispatcher: CoroutineDispatcher): Flow<CommentApiState<List<CommentModel>>> {
-        return flow {
-            val comments = commentApi.getCommentData()
-            val commentList = comments.map { comment ->
-                comment.mapToComment()
+    override suspend fun getComments(dispatcher: CoroutineDispatcher): ResultWrapper<List<CommentModel>> {
+        val dataResult = safeApiCall(dispatcher) { commentApi.getCommentData() }
+        return when (dataResult) {
+            is ResultWrapper.Success -> {
+                val commentList = dataResult.data.map { it.mapToComment() }
+                ResultWrapper.Success(commentList)
             }
-            emit(CommentApiState.success(commentList))
-        }.flowOn(dispatcher)
+
+            is ResultWrapper.Failure -> ResultWrapper.Failure(dataResult.msg)
+        }
     }
 }

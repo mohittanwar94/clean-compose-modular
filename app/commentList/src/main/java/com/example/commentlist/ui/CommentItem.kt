@@ -20,7 +20,7 @@ import com.example.commentlist.utils.listCommentItemCommentTag
 import com.example.commentlist.utils.listCommentItemNameTag
 import com.example.commentlist.utils.listCommentItemPostIDTag
 import com.example.coreandroid.theme.Typography
-import com.example.domain.CommentModel
+import com.example.domain.commentlist.CommentModel
 
 @Composable
 fun CommentItem(

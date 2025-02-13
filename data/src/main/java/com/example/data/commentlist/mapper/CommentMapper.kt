@@ -1,7 +1,7 @@
 package com.example.data.commentlist.mapper
 
 import com.example.data.commentlist.CommentModelDTO
-import com.example.domain.CommentModel
+import com.example.domain.commentlist.CommentModel
 
 
 fun CommentModelDTO.mapToComment(): CommentModel {

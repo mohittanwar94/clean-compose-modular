@@ -1,4 +1,4 @@
-package com.example.cleanwithcompose
+package com.example.domain.utils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestDispatcher

@@ -1,22 +1,24 @@
-package com.example.cleanwithcompose
+package com.example.commentlist
 
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.test.assertHasNoClickAction
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performScrollToNode
-import com.example.cleanwithcompose.domain.CommentModel
-import com.example.cleanwithcompose.persentor.CommentUIState
-import com.example.cleanwithcompose.persentor.CommentsScreen
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import com.example.commentlist.ui.CommentsScreen
+import com.example.commentlist.utils.listCommentLoaderTag
+import com.example.commentlist.utils.listCommentTag
+import com.example.commentlist.viewmodel.CommentUIState
+import com.example.coreandroid.theme.CleanWithComposeTheme
+import com.example.domain.commentlist.CommentModel
 import org.junit.Rule
 import org.junit.Test
 
 class CommentScreenTest {
+    private val onBackClick: () -> Unit = {}
+
     @get:Rule
     val composeTestRule = createComposeRule()
 
@@ -24,8 +26,8 @@ class CommentScreenTest {
     @Test
     fun testPostIdDisplayMatchOrNot() {
         composeTestRule.setContent {
-            MaterialTheme {
-                val listState = MutableStateFlow(
+            CleanWithComposeTheme {
+                val listState =
                     CommentUIState.SUCCESS(
                         listOf(
                             CommentModel(
@@ -85,18 +87,18 @@ class CommentScreenTest {
                             ),
                         )
                     )
-                ).asStateFlow().collectAsState()
                 CommentsScreen(
-                    comments = listState
+                    commentsList = listState,
+                    onBackClick = onBackClick
                 )
             }
         }
         composeTestRule.waitForIdle()
-        composeTestRule.onNodeWithTag("commentList")
+        composeTestRule.onNodeWithTag(listCommentTag)
             .performScrollToNode(hasText("post Id: 1233"))
             .assertHasNoClickAction()
 
-        composeTestRule.onNodeWithTag("commentList")
+        composeTestRule.onNodeWithTag(listCommentTag)
             .performScrollToNode(hasText("post Id: 11"))
             .assertIsDisplayed()
     }
@@ -105,7 +107,7 @@ class CommentScreenTest {
     fun testCommentDisplayMatchOrNot() {
         composeTestRule.setContent {
             MaterialTheme {
-                val listState = MutableStateFlow(
+                val listState =
                     CommentUIState.SUCCESS(
                         listOf(
                             CommentModel(
@@ -165,17 +167,17 @@ class CommentScreenTest {
                             ),
                         )
                     )
-                ).asStateFlow().collectAsState()
                 CommentsScreen(
-                    comments = listState
+                    commentsList = listState,
+                    onBackClick = onBackClick
                 )
             }
         }
         composeTestRule.waitForIdle()
-        composeTestRule.onNodeWithTag("commentList")
+        composeTestRule.onNodeWithTag(listCommentTag)
             .performScrollToNode(hasText("jdfoijrkernfs,dmmsdlkjfoiwejwrioewjioEJQLKMWREKLDSMDLKAMLKDJOIJERFIOEHFUINXCZJKNADKLNKJBHJSBJH"))
             .assertIsDisplayed()
-        composeTestRule.onNodeWithTag("commentList")
+        composeTestRule.onNodeWithTag(listCommentTag)
             .performScrollToNode(hasText("jdfoijrkernfs,dmmsdlkjfoiwejwrioewjioEJQLKMWREKLDSMDLKAMLKDJOIJERFIOEHFUINXCZJKNADKLNKJBHJSBJH"))
             .assertExists()
     }
@@ -184,7 +186,7 @@ class CommentScreenTest {
     fun testNameDisplayMatchOrNot() {
         composeTestRule.setContent {
             MaterialTheme {
-                val listState = MutableStateFlow(
+                val listState =
                     CommentUIState.SUCCESS(
                         listOf(
                             CommentModel(
@@ -244,14 +246,14 @@ class CommentScreenTest {
                             ),
                         )
                     )
-                ).asStateFlow().collectAsState()
                 CommentsScreen(
-                    comments = listState
+                    commentsList = listState,
+                    onBackClick = onBackClick
                 )
             }
         }
         composeTestRule.waitForIdle()
-        composeTestRule.onNodeWithTag("commentList")
+        composeTestRule.onNodeWithTag(listCommentTag)
             .performScrollToNode(hasText("Name: Display2"))
             .assertIsDisplayed()
     }
@@ -260,21 +262,19 @@ class CommentScreenTest {
     fun testCommentListDisplayProgress() {
         composeTestRule.setContent {
             MaterialTheme {
-                val listState = MutableStateFlow(
+                val listState =
                     CommentUIState.LOADING
-                ).asStateFlow().collectAsState()
                 CommentsScreen(
-                    comments = listState
+                    commentsList = listState,
+                    onBackClick = onBackClick
                 )
             }
         }
-        composeTestRule.onNodeWithTag("centerLoader")
+        composeTestRule.onNodeWithTag(listCommentLoaderTag)
             .assertIsDisplayed()
-
-        composeTestRule.onNodeWithTag("centerLoader")
+        composeTestRule.onNodeWithTag(listCommentLoaderTag)
             .assertHasNoClickAction()
-
-        composeTestRule.onNodeWithTag("centerLoader")
+        composeTestRule.onNodeWithTag(listCommentLoaderTag)
             .assertExists()
     }
 }

@@ -1,7 +1,7 @@
 package com.example.commentlist.di
 
-import com.example.domain.CommentRepository
-import com.example.domain.CommentUseCase
+import com.example.domain.commentlist.CommentRepository
+import com.example.domain.commentlist.CommentUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
