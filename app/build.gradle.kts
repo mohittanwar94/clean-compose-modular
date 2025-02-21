@@ -43,11 +43,12 @@ android {
 }
 
 dependencies {
+    implementation(project(":commentlist"))
+    implementation(project(":profile"))
     implementation(project(":coreandroid"))
     implementation(project(":corenetwork"))
-    implementation(project(":app:commentList"))
-    implementation(project(":data"))
     implementation(project(":domain"))
+    implementation(project(":data"))
     kapt(libs.hilt.compiler)
     api(libs.hilt.android)
     //testing dependencies

@@ -5,6 +5,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.CertificatePinner
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -26,12 +27,21 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideOkHttpClient(): OkHttpClient {
-        return OkHttpClient.Builder().addInterceptor(provideHttpLogger()).build()
+        return OkHttpClient.Builder().addInterceptor(provideHttpLogger()).certificatePinner(
+            provideCertificatePinner()
+        ).build()
     }
 
     @Provides
     @Singleton
     fun provideHttpLogger(): HttpLoggingInterceptor {
         return HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCertificatePinner(): CertificatePinner {
+        val certificatePinner= CertificatePinner.Builder().add("jsonplaceholder.typicode.com","sha256/kIdp6NNEd8wsugYyyIYFsi1ylMCED3hZbSR8ZFsa/A4=").build()
+        return certificatePinner
     }
 }

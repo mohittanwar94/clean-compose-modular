@@ -33,10 +33,11 @@ android {
 }
 
 dependencies {
-    implementation(project(":corenetwork"))
     implementation(project(":domain"))
+    implementation(project(":corenetwork"))
     api(libs.hilt.android)
     kapt(libs.hilt.compiler)
+    implementation(libs.converter.gson)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

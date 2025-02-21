@@ -7,6 +7,9 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.example.commentlist.navigation.commentListScreen
+import com.example.domain.commentlist.CommentModel
+import com.example.profile.navigation.navigateToProfile
+import com.example.profile.navigation.profileScreen
 
 /*define App Navigation for each Module with backStack control*/
 @Composable
@@ -20,7 +23,14 @@ fun AppNavigation(
         startDestination = startDestination,
         modifier = modifier
     ) {
-        commentListScreen(onBackClick = navHostController::popBackStackOrIgnore)
+        commentListScreen(onItemClick = { item: CommentModel ->
+            navHostController.navigateToProfile(
+                item.postId,
+                item.name,
+                item.comment
+            )
+        })
+        profileScreen(onBackClick = navHostController::popBackStackOrIgnore)
     }
 
 }

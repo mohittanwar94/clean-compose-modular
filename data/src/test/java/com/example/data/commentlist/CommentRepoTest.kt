@@ -47,32 +47,13 @@ class CommentRepoTest {
         val commentModel = CommentModel(Constants.POST_ID_1, Constants.Name_1, Constants.Comment_1)
         val commentModel1 =
             CommentModel(Constants.POST_ID_111, Constants.Name_111, Constants.Comment_111)
-        val listComment = listOf(commentModel, commentModel1)
-        val expectedData = ResultWrapper.Success(listComment)
-        Mockito.`when`(repositoryImpl.getComments(testDispatcher)).thenReturn(expectedData)
-        val actualResult = repositoryImpl.getComments(testDispatcher)
+        val expectedDataList = listOf(commentModel, commentModel1)
+        Mockito.`when`(repositoryImpl.getComments()).thenReturn(expectedDataList)
+        val actualResult = repositoryImpl.getComments()
         testDispatcher.scheduler.advanceUntilIdle()
-        assertTrue(actualResult is ResultWrapper.Success)
-        verify(repositoryImpl).getComments(testDispatcher)
-        val list = ArrayList<CommentModel>()
-        if (actualResult is ResultWrapper.Success)
-            list.addAll(actualResult.data)
-        assertEquals(expectedData.data[1].comment, list[1].comment)
+        verify(repositoryImpl).getComments()
+        assertEquals(expectedDataList[1].comment, actualResult[1].comment)
     }
-
-    @Test
-    fun checkErrorInRepository() = runTest {
-        val dataExpected =
-            ResultWrapper.Failure<Nothing>(Constants.Error_MSG)
-        Mockito.`when`(repositoryImpl.getComments(testDispatcher)).thenReturn(dataExpected)
-        val actualResult = repositoryImpl.getComments(testDispatcher)
-        testDispatcher.scheduler.advanceUntilIdle()
-        assertTrue(actualResult is ResultWrapper.Failure)
-        verify(repositoryImpl).getComments(testDispatcher)
-        val msgActual = (actualResult as ResultWrapper.Failure).msg
-        assertEquals(dataExpected.msg, msgActual)
-    }
-
 
     @After
     fun tearDown() {

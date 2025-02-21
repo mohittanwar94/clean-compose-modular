@@ -49,50 +49,18 @@ class CommentUseCaseTest {
     fun checkSuccessUseCaseHaveSuccessDataOrNot() = runTest {
         useCase = CommentUseCase(repositoryImpl)
         val commentModel = CommentModel(1, Constants.Name, Constants.Comment)
-        val dataExpected = ResultWrapper.Success(
+        val dataExpected =
             listOf(
                 commentModel
             )
-        )
-        Mockito.`when`(repositoryImpl.getComments(testDispatcher)).thenReturn(dataExpected)
-        val actualResult = useCase.invoke(testDispatcher)
-        val dataActual = ArrayList<CommentModel>()
-        assertTrue(actualResult is ResultWrapper.Success)
-        dataActual.addAll((actualResult as ResultWrapper.Success).data)
-        verify(repositoryImpl).getComments(testDispatcher)
-        assertEquals(dataExpected.data[0].comment, dataActual[0].comment)
-        assertEquals(dataExpected.data[0].name, dataActual[0].name)
-        assertEquals(dataExpected.data[0].postId, dataActual[0].postId)
+
+        Mockito.`when`(repositoryImpl.getComments()).thenReturn(dataExpected)
+        val actualResult = useCase.invoke()
+        verify(repositoryImpl).getComments()
+        assertEquals(dataExpected[0].comment, actualResult[0].comment)
+        assertEquals(dataExpected[0].name, actualResult[0].name)
+        assertEquals(dataExpected[0].postId, actualResult[0].postId)
     }
-
-    @Test
-    fun checkErrorUseCase() = runTest {
-        useCase = CommentUseCase(repositoryImpl)
-        val dataExpected =
-            ResultWrapper.Failure<Nothing>(Error_MSG)
-        Mockito.`when`(repositoryImpl.getComments(testDispatcher)).thenReturn(dataExpected)
-        val actualResult = useCase.invoke(testDispatcher)
-        verify(repositoryImpl).getComments(testDispatcher)
-        assertTrue(actualResult is ResultWrapper.Failure)
-        val message: String = (actualResult as ResultWrapper.Failure).msg
-        assertEquals(Error_MSG, message)
-    }
-
-
-    @Test(expected = RuntimeException::class)
-    fun checkExceptionInUseCase() = runTest {
-        useCase = CommentUseCase(repositoryImpl)
-        val dataExpected =
-            ResultWrapper.Failure<String>(Runtime_Error_MSG)
-        Mockito.`when`(repositoryImpl.getComments(testDispatcher))
-            .thenThrow(RuntimeException::class.java)
-        val actualResult = useCase.invoke(testDispatcher)
-        verify(repositoryImpl).getComments(testDispatcher)
-        assertTrue(actualResult is ResultWrapper.Failure)
-        val message: String = (actualResult as ResultWrapper.Failure).msg
-        assertEquals(dataExpected.msg, message)
-    }
-
 
     @After
     fun tearDown() {
